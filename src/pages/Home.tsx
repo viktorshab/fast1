@@ -3,6 +3,57 @@ import { motion, AnimatePresence } from "motion/react";
 import { Send, Zap, Clock, DollarSign, CheckCircle2, ArrowRight, Play, Sparkles, Rocket, Palette, Star, TrendingUp, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
+// ═══════════════════════════════════════════════════════════════════════
+// 🎬  МЕДІА-ФАЙЛИ ЛЕНДИНГА  —  ЄДИНЕ МІСЦЕ, ДЕ ТРЕБА ЩОСЬ МІНЯТИ
+// ═══════════════════════════════════════════════════════════════════════
+//
+// ⚠️  ЧОМУ ТВОЯ КАРТИНКА НЕ ЗАВАНТАЖИЛАСЬ, КОЛИ ТИ ПРОСТО КИНУВ ЇЇ У ПАПКУ?
+//     Тому що код не знає про новий файл, поки ти не впишеш його назву
+//     сюди, в MEDIA. Файл у папці ≠ файл на сайті. Треба 2 кроки:
+//       (1) покласти файл у public/  або  public/videos/
+//       (2) вписати його ім'я в цей блок (нижче)
+//
+// ───────────────────────────────────────────────────────────────────────
+// ЯК ДОДАТИ СВОЮ КАРТИНКУ:
+//   1. Стисни картинку до WebP або JPG, розмір до 500 КБ
+//      (онлайн: https://squoosh.app  або  https://tinypng.com)
+//   2. Поклади файл у папку  public/   напр.,  public/my-hero.webp
+//   3. Знайди потрібний рядок нижче (heroBackground / modalBackground)
+//   4. Заміни значення справа від "=" на шлях свого файлу:
+//        heroBackground: "/my-hero.webp",
+//      ВАЖЛИВО: шлях починається зі "/"  (без слова "public")
+//   5. Збережи файл — сайт оновиться сам.
+//
+// ЯК ДОДАТИ СВОЄ ВІДЕО:
+//   1. Пересохрани в MP4 (кодек H.264), розмір до 10 МБ
+//      (онлайн: https://www.freeconvert.com/video-compressor)
+//   2. Поклади файл у  public/videos/   напр.,  public/videos/marshall.mp4
+//   3. Заміни потрібний рядок (caseNVideo) на:
+//        case4Video: "videos/marshall.mp4",
+//      (для відео шлях БЕЗ слеша на початку — просто "videos/...")
+//   4. Збережи файл.
+// ═══════════════════════════════════════════════════════════════════════
+const MEDIA = {
+  // ── Фон головного екрана (Hero) ──────────────────────────────────────
+  // Зараз: картинка з Unsplash (тягнеться з інтернету).
+  // Свій варіант: поклади файл у public/ і заміни цей рядок, напр.:
+  //   heroBackground: "/my-hero.webp",
+  heroBackground:
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+
+  // ── Фон модального вікна "Залиш заявку" ──────────────────────────────
+  // Свій варіант:  modalBackground: "/my-modal.webp",
+  modalBackground:
+    "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop",
+
+  // ── Відео 4-х кейсів (усі файли повинні лежати у public/videos/) ────
+  case1Video: "videos/case1.mp4", // 🟢 ЄСТЬ   —  "Автосалон Chery"
+  case2Video: "videos/case2.mp4", // 🟢 ЄСТЬ   —  "Косметика 'To Be'"
+  case3Video: "videos/case3.mp4", // 🟢 ЄСТЬ   —  "Автосалон Porsche"
+  case4Video: "videos/case4.mp4", // ❌ НЕМА! Поклади свій файл у public/videos/case4.mp4
+  //                                   (або заміни рядок вище на ім'я свого файла)
+};
+
 // FastMotion Studio - Portfolio 2026
 export default function Home() {
   const navigate = useNavigate();
@@ -31,8 +82,8 @@ export default function Home() {
     <div className="min-h-screen font-sans bg-slate-950 text-slate-50 selection:bg-neon-green selection:text-slate-950">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
+        <img
+          src={MEDIA.heroBackground}
           alt="Background"
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
@@ -174,7 +225,7 @@ export default function Home() {
                   result: "CTR +60%, віральне охоплення",
                   ratio: "aspect-[9/16]",
                   accent: "from-red-600/20",
-                  video: "videos/case1.mp4"
+                  video: MEDIA.case1Video
                 },
                 {
                   title: "Косметика 'To Be'",
@@ -183,7 +234,7 @@ export default function Home() {
                   result: "Зростання продажів у 3 рази",
                   ratio: "aspect-[9/16]",
                   accent: "from-blue-600/20",
-                  video: "videos/case2.mp4"
+                  video: MEDIA.case2Video
                 },
                 {
                   title: "Автосалон Porsche",
@@ -192,7 +243,7 @@ export default function Home() {
                   result: "ROI 320% на рекламній кампанії",
                   ratio: "aspect-[9/16]",
                   accent: "from-yellow-600/20",
-                  video: "videos/case3.mp4"
+                  video: MEDIA.case3Video
                 },
                 {
                   title: "Marshall",
@@ -201,7 +252,7 @@ export default function Home() {
                   result: "Охоплення 500к+ за тиждень",
                   ratio: "aspect-[9/16]",
                   accent: "from-purple-600/20",
-                  video: "videos/case4.mp4"
+                  video: MEDIA.case4Video
                 }
               ].map((item, i) => (
                 <motion.div 
@@ -455,9 +506,9 @@ export default function Home() {
               </button>
 
               <div className="w-full aspect-[16/9] relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Creative Collaboration and Success" 
+                <img
+                  src={MEDIA.modalBackground}
+                  alt="Creative Collaboration and Success"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
